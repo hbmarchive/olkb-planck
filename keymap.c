@@ -46,8 +46,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [SYM_LAYER] = LAYOUT_planck_grid(
-    KC_EXLM,         KC_DQUO,        LSFT(KC_3),  KC_DLR,   KC_PERC,  KC_TRNS,         KC_TRNS,        KC_CIRC,  KC_AMPR,        KC_ASTR,        KC_UNDS,  KC_PLUS,
-    KC_ESC,          LSFT(KC_CAPS),  KC_LBRC,     KC_LCBR,  KC_LPRN,  KC_TRNS,         KC_TRNS,        KC_COLN,  LSFT(KC_QUOT),  LSFT(KC_BSLS),  KC_MINS,  KC_EQL,
+    KC_EXLM,         LSFT(KC_2),        LSFT(KC_3),  KC_DLR,   KC_PERC,  KC_TRNS,         KC_TRNS,        KC_CIRC,  KC_AMPR,        KC_ASTR,        KC_UNDS,  KC_PLUS,
+    KC_ESC,          LSFT(KC_NUBS),  KC_LBRC,     KC_LCBR,  KC_LPRN,  KC_TRNS,         KC_TRNS,        KC_COLN,  LSFT(KC_QUOT),  LSFT(KC_BSLS),  KC_MINS,  KC_EQL,
     TO(FUNC_LAYER),  KC_NUBS,        KC_RBRC,     KC_RCBR,  KC_RPRN,  KC_TRNS,         KC_TRNS,        KC_SCLN,  KC_QUOT,        KC_BSLS,        KC_GRV,   OSL(SCUT_LAYER),
     KC_TRNS,         KC_TRNS,        KC_TRNS,     KC_TRNS,  KC_TRNS,  TO(BASE_LAYER),  TO(NAV_LAYER),  KC_TRNS,  KC_TRNS,        KC_TRNS,        KC_TRNS,  KC_TRNS
   ),
