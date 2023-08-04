@@ -51,7 +51,7 @@ key* twice. To get a question mark character, press the `Shift` key first.
 
 ## Symbol Layer
 
-![Symbol Layer](https://i.imgur.com/QILy4AF.png)
+![Symbol Layer](https://i.imgur.com/Pb4pIjD.png)
 
 ## Navigation Layer
 
