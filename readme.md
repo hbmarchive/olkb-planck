@@ -34,7 +34,7 @@ predictable way without having to know which layer you are currently in.
 
 **To get to the shortcut layer** tap the *forward slash key* once.
 
-Note that you can get a forward slash character by typing the *forwarc slash
+Note that you can get a forward slash character by typing the *forward slash
 key* twice. To get a question mark character, press the `Shift` key first.
 
 **To get to the number layer** tap the *right thumb key* twice.
