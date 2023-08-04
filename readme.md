@@ -1,6 +1,8 @@
 # Hannah's OLKB Planck Layout
 
-This OLKB Planck layout is a modification of the 34-key layout I use on my
+![My OLKB Planck keyboard](https://i.imgur.com/dwNYMdI.png)
+
+ This OLKB Planck layout is a modification of the 34-key layout I use on my
 Ferris Sweep. It treats the Planck as a 34-key keyboard and uses the additional
 keys for extras.
 
