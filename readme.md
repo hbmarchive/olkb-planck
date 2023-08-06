@@ -1,22 +1,19 @@
 # Hannah's OLKB Planck Layout
 
-This is basically a copy of my first attempt at a layout for my Ferris Sweep
-that I have adapted for my OLKB Planck. I have chosen learn Colemak DH - my
-first alternative keyboard layout - so I have tried to take my cues for numbers
-and symbols from the UK ISO keyboard layout to keep everything else as familiar
-as possible.
+![My OLKB Planck keyboard](https://i.imgur.com/dwNYMdI.png)
 
-Broadly speaking, this is designed as a layout where keys and modifiers are
-tapped rather than held down. Aside from the use of home row modifier keys there
-is no chording required and I try to use tap dancing as an alternative for
-common situations where chording would otherwise be called for.
+ This OLKB Planck layout is a modification of the 34-key layout I use on my
+Ferris Sweep. It treats the Planck as a 34-key keyboard and uses the additional
+keys for extras.
 
-In practice, a single tap of the layer key gets to the symbol layer and a double
-tap of the same layer key gets to the number and navigation layer. Most of the
-time you will be tapping this layer key, hitting a symbol then carrying on in
-the base layer. Also, wherever you are, tapping the space or enter key will
-bring you back to the base layer. The idea is that you should not have to think
-too much about which layer you are in most of the time.
+Broadly speaking, the layout is designed so that keys and modifiers are tapped
+rather than held down. In place of the homerow modifiers this Planck version has
+additional modifier keys mapped as one shot modifiers.
+
+There are additional layer keys available to access function keys and shortcuts
+although, in the case of the shortcuts, they may be honed to my individual
+workflow and rely on AutoHotkey bindings. I have included a copy of my
+AutoHotkey script for information.
 
 ### Credit
 
@@ -29,3 +26,43 @@ layout](https://github.com/benvallack/34-QMK-Ferris-Sweep).
 The contributers who make QMK possible are an incredible bunch of people and the
 ErgoMechKeyboard community as a whole has been welcoming and helpful. Please
 support open source projects and communities, folks.
+
+## Layer Navigation
+
+The layer navigation keys are designed so that you can move between layers in a
+predictable way without having to know which layer you are currently in.
+
+**To get to the base layer** tap the *right thumb key* followed by the *left thumb key*.
+
+**To get to the shortcut layer** tap the *forward slash key* once.
+
+Note that you can get a forward slash character by typing the *forward slash
+key* twice. To get a question mark character, press the `Shift` key first.
+
+**To get to the number layer** tap the *right thumb key* twice.
+
+**To get to the function layer** tap the *bottom left key*.
+
+**To get to the symbol layer** tap the *right*, *left* then *right thumb key*.
+
+## Base Layer
+
+![Base Layer](https://i.imgur.com/t6V6eYU.png)
+
+## Symbol Layer
+
+![Symbol Layer](https://i.imgur.com/Pb4pIjD.png)
+
+## Navigation Layer
+
+![Navigation Layer](https://i.imgur.com/z980sgh.png)
+
+## Function Layer
+
+![Function Layer](https://i.imgur.com/xZUrZkp.png)
+
+## Shortcut Layer
+
+![Shortcut Layer](https://i.imgur.com/hQgsvtr.png)
+
+
