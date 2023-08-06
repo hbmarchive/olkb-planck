@@ -28,6 +28,7 @@ enum my_keycodes {
     M_ESCQ = SAFE_RANGE,
     M_ESCW,
     M_ESCV,
+    M_ECSL,
     M_EQLR,
     M_ALTT
 };
@@ -40,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [BASE_LAYER] = LAYOUT_planck_grid(
     KC_Q,            KC_W,           KC_F,           KC_P,           KC_B,    LCTL(KC_TAB),        M_ALTT,            KC_J,    KC_L,     KC_U,     KC_Y,    KC_BSPC,
-    KC_A,            KC_R,           KC_S,           KC_T,           KC_G,    KC_ESC,              KC_BSLS,            KC_M,    KC_N,     KC_E,     KC_I,    KC_O,
+    KC_A,            KC_R,           KC_S,           KC_T,           KC_G,    KC_ESC,              M_ECSL,            KC_M,    KC_N,     KC_E,     KC_I,    KC_O,
     KC_Z,            KC_X,           KC_C,           KC_D,           KC_V,    LSFT(LCTL(KC_SPC)),  LSFT(LCTL(KC_C)),  KC_K,    KC_H,     KC_COMM,  KC_DOT,  OSL(SCUT_LAYER),
     TO(FUNC_LAYER),  OSM(MOD_LGUI),  OSM(MOD_LALT),  OSM(MOD_LCTL),  KC_SPC, OSM(MOD_LSFT), OSL(SYM_LAYER),KC_ENT,    KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT
   ),
@@ -56,7 +57,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_1,     KC_2,          KC_3,                 KC_4,                 KC_5,     KC_TRNS,         KC_TRNS,  KC_6,     KC_7,     KC_8,     KC_9,     KC_0,
     KC_TAB,   LCTL(KC_TAB),  M_ALTT,               KC_BTN1,              KC_BTN2,  KC_TRNS,         KC_TRNS,  KC_WH_U,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,
     TO(FUNC_LAYER), LCTL(KC_F4),   LCTL(LGUI(KC_LEFT)),  LCTL(LGUI(KC_RGHT)),  M_ESCV,   KC_TRNS,         KC_TRNS,  KC_WH_D,  KC_HOME,  KC_PGDN,  KC_PGUP,  OSL(SCUT_LAYER),
-    KC_TRNS,  KC_TRNS,       KC_TRNS,              KC_TRNS,               TO(BASE_LAYER),  KC_TRNS, KC_TRNS, KC_NO, KC_TRNS,   KC_TRNS,  KC_TRNS,  KC_TRNS
     KC_TRNS,        KC_TRNS,     KC_TRNS, KC_TRNS,  KC_TRNS,   TO(BASE_LAYER),  KC_NO,KC_TRNS,   KC_TRNS,        KC_TRNS,  KC_TRNS, KC_TRNS
   ),
 
@@ -115,6 +115,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         SEND_STRING(SS_TAP(X_ESC));
         SEND_STRING(SS_DOWN(X_LSFT)SS_TAP(X_V)SS_UP(X_LSFT));
+      }
+      break;
+    case M_ECSL:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_ESC));
+        SEND_STRING(SS_DOWN(X_LSFT)SS_TAP(X_SCLN)SS_UP(X_LSFT));
+        SEND_STRING(SS_TAP(X_SLSH));
       }
       break;
   }
