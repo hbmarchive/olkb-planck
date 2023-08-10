@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     LSFT_T(KC_Q),    LCTL_T(KC_W),   LALT_T(KC_F),   LGUI_T(KC_P),   KC_B,    LCTL(KC_TAB),        M_ALTT,            KC_J,    LGUI_T(KC_L),  LALT_T(KC_U),  LCTL_T(KC_Y),  LSFT_T(KC_BSPC),
     KC_A,            KC_R,           KC_S,           KC_T,           KC_G,    KC_ESC,              M_ECSL,            KC_M,    KC_N,          KC_E,          KC_I,          KC_O,
     KC_Z,            KC_X,           KC_C,           KC_D,           KC_V,    LSFT(LCTL(KC_SPC)),  LSFT(LCTL(KC_C)),  KC_K,    KC_H,          KC_COMM,       KC_DOT,        OSL(SCUT_LAYER),
-    TO(FUNC_LAYER),  OSM(MOD_LGUI),  OSM(MOD_LALT),  OSM(MOD_LCTL),  KC_SPC,  OSM(MOD_LSFT),       OSL(SYM_LAYER),    KC_ENT,  KC_LEFT,       KC_DOWN,       KC_UP,         KC_RGHT
+    TO(FUNC_LAYER),  OSM(MOD_LCTL),  OSM(MOD_LALT),  OSM(MOD_LGUI),  KC_SPC,  OSM(MOD_LSFT),       OSL(SYM_LAYER),    KC_ENT,  KC_LEFT,       KC_DOWN,       KC_UP,         KC_RGHT
   ),
 
   [SYM_LAYER] = LAYOUT_planck_grid(
@@ -161,5 +161,30 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       break;
+  }
+}
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    // Set the tapping term for the homerow mods.
+    case LSFT_T(KC_Q):
+    case LCTL_T(KC_W):
+    case LALT_T(KC_F):
+    case LGUI_T(KC_P):
+    case LGUI_T(KC_L):
+    case LALT_T(KC_U):
+    case LCTL_T(KC_Y):
+    case LSFT_T(KC_BSPC):
+    case LSFT_T(KC_1):
+    case LCTL_T(KC_2):
+    case LALT_T(KC_3):
+    case LGUI_T(KC_4):
+    case LGUI_T(KC_7):
+    case LALT_T(KC_8):
+    case LCTL_T(KC_9):
+    case LSFT_T(KC_0):
+      return TAPPING_TERM_MODS;
+    default:
+      return TAPPING_TERM;
   }
 }

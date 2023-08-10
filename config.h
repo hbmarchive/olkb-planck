@@ -48,6 +48,10 @@
 #define MOUSEKEY_WHEEL_ACCELERATED_MOVEMENTS 32
 #define MOUSEKEY_WHEEL_DECELERATED_MOVEMENTS 12
 
-// Set the tapping term to something comfortable
+// Default tapping term
 #define TAPPING_TERM 190
 #define PERMISSIVE_HOLD
+#define TAPPING_TERM_PER_KEY
+
+// Tapping term for the homerow mod keys
+#define TAPPING_TERM_MODS 550
