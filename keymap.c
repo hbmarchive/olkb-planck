@@ -30,7 +30,8 @@ enum my_keycodes {
     M_ESCV,
     M_ECSL,
     M_EQLR,
-    M_ALTT
+    M_ALTT,
+    M_SCM1
 };
 
 // Stores state of M_ALTT macro - true if we are currently tabbing between
@@ -56,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [NAV_LAYER]          = LAYOUT_planck_grid(
     KC_1,              KC_2,          KC_3,                 KC_4,                 KC_5,     KC_TRNS,         KC_TRNS,  KC_6,     KC_7,     KC_8,     KC_9,     KC_0,
     KC_TAB,            LCTL(KC_TAB),  M_ALTT,               KC_BTN1,              KC_BTN2,  KC_TRNS,         KC_TRNS,  KC_WH_U,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,
-    TO(FUNC_LAYER),    LCTL(LGUI(KC_LEFT)),  LCTL(LGUI(KC_RGHT)), LCTL(KC_BTN1),  M_ESCV,   KC_TRNS,         KC_TRNS,  KC_WH_D,  KC_HOME,  KC_PGDN,  KC_PGUP,  OSL(SCUT_LAYER),
+    TO(FUNC_LAYER),    LCTL(LGUI(KC_LEFT)),  LCTL(LGUI(KC_RGHT)), M_SCM1,  M_ESCV,   KC_TRNS,         KC_TRNS,  KC_WH_D,  KC_HOME,  KC_PGDN,  KC_PGUP,  OSL(SCUT_LAYER),
     KC_TRNS,           KC_TRNS,       KC_TRNS,              KC_TRNS,              KC_TRNS,  TO(BASE_LAYER),  KC_NO,    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
                        ),
 
@@ -88,6 +89,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           m_altt_pressed = true;
         }
         tap_code(KC_TAB);
+      }
+      break;
+    case M_SCM1:
+      if (record->event.pressed) {
+        SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL));
+        SEND_STRING(SS_DELAY(100)SS_TAP(X_BTN1));
+        SEND_STRING(SS_UP(X_LCTL)SS_UP(X_LSFT));
       }
       break;
     case M_ESCQ:
