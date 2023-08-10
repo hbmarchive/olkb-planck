@@ -34,6 +34,16 @@ enum my_keycodes {
     M_SCM1
 };
 
+enum {
+  TD_SPC_TAB
+};
+
+// Tap Dance definitions
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_SPC_TAB] = ACTION_TAP_DANCE_DOUBLE(KC_SPC, KC_TAB)
+};
+
+
 // Stores state of M_ALTT macro - true if we are currently tabbing between
 // windows.
 static bool m_altt_pressed = false;
@@ -44,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     LSFT_T(KC_Q),    LCTL_T(KC_W),   LALT_T(KC_F),   LGUI_T(KC_P),   KC_B,    LCTL(KC_TAB),        M_ALTT,            KC_J,    LGUI_T(KC_L),  LALT_T(KC_U),  LCTL_T(KC_Y),  LSFT_T(KC_BSPC),
     KC_A,            KC_R,           KC_S,           KC_T,           KC_G,    KC_ESC,              M_ECSL,            KC_M,    KC_N,          KC_E,          KC_I,          KC_O,
     KC_Z,            KC_X,           KC_C,           KC_D,           KC_V,    LSFT(LCTL(KC_SPC)),  LSFT(LCTL(KC_C)),  KC_K,    KC_H,          KC_COMM,       KC_DOT,        OSL(SCUT_LAYER),
-    TO(FUNC_LAYER),  OSM(MOD_LCTL),  OSM(MOD_LALT),  OSM(MOD_LGUI),  KC_SPC,  OSM(MOD_LSFT),       OSL(SYM_LAYER),    KC_ENT,  KC_LEFT,       KC_DOWN,       KC_UP,         KC_RGHT
+    TO(FUNC_LAYER),  OSM(MOD_LCTL),  OSM(MOD_LALT),  OSM(MOD_LGUI),  TD(TD_SPC_TAB),  OSM(MOD_LSFT),       OSL(SYM_LAYER),    KC_ENT,  KC_LEFT,       KC_DOWN,       KC_UP,         KC_RGHT
   ),
 
   [SYM_LAYER] = LAYOUT_planck_grid(
