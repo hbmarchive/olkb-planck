@@ -30,22 +30,32 @@ enum my_keycodes {
     M_ESCV,
     M_EQLR,
     M_ALTT,
+    M_APP1,
+    M_APP2,
+    M_APP3,
+    M_APP4,
+    M_APP5,
+    M_APP6,
     M_SCM1,
     M_1PASS,
     M_NDESK,
     M_PDESK,
     M_XTAB,
+    M_WMIN,
+    M_WMAX,
     M_ISCB,
     M_ISWIN
 };
 
 enum {
-  TD_SPC_TAB
+  TD_SPC_TAB,
+  TD_HOME_END
 };
 
 // Tap Dance definitions
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_SPC_TAB] = ACTION_TAP_DANCE_DOUBLE(KC_SPC, KC_TAB)
+    [TD_SPC_TAB] = ACTION_TAP_DANCE_DOUBLE(KC_SPC, KC_TAB),
+    [TD_HOME_END] = ACTION_TAP_DANCE_DOUBLE(KC_HOME, KC_END)
 };
 
 // Stores state of M_ALTT macro - true if we are currently tabbing between
@@ -75,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [NAV_LAYER] = LAYOUT_planck_grid(
     LSFT_T(KC_1),    LCTL_T(KC_2),  LALT_T(KC_3),  LGUI_T(KC_4),  KC_5,     KC_TRNS,         KC_TRNS,  KC_6,     LGUI_T(KC_7),  LALT_T(KC_8),  LCTL_T(KC_9),  LSFT_T(KC_0),
     M_XTAB,          LCTL(KC_TAB),  M_ALTT,        KC_BTN1,       KC_BTN2,  KC_TRNS,         KC_TRNS,  KC_WH_U,  KC_LEFT,       KC_DOWN,       KC_UP,         KC_RGHT,
-    TO(FUNC_LAYER),  M_PDESK,       M_NDESK,       M_SCM1,        M_ESCV,   KC_TRNS,         KC_TRNS,  KC_WH_D,  KC_HOME,       KC_PGDN,       KC_PGUP,       OSL(SCUT_LAYER),
+    TO(FUNC_LAYER),  M_PDESK,       M_NDESK,       M_SCM1,        M_ESCV,   KC_TRNS,         KC_TRNS,  KC_WH_D,  TD(TD_HOME_END),       KC_PGDN,       KC_PGUP,       OSL(SCUT_LAYER),
     KC_TRNS,         KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS,  TO(BASE_LAYER),  KC_NO,    KC_TRNS,  KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS
   ),
 
@@ -87,17 +97,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [SCUT_LAYER] = LAYOUT_planck_grid(
-    M_ESCQ,   M_ESCW,      LCTL(KC_F),  KC_NO,             LCTL(KC_B),  KC_TRNS,         KC_TRNS,  HYPR(KC_J),  KC_NO,             KC_NO,       KC_NO,       KC_DEL,
-    KC_TAB,   HYPR(KC_1),  HYPR(KC_2),  M_1PASS,           HYPR(KC_3),  KC_TRNS,         KC_TRNS,  HYPR(KC_M),  HYPR(KC_4),        HYPR(KC_5),  HYPR(KC_6),  KC_INS,
+    M_ESCQ,   M_ESCW,      LCTL(KC_F),  KC_NO,             LCTL(KC_B),  KC_TRNS,         KC_TRNS,  M_WMAX,  KC_NO,             KC_NO,       KC_NO,       KC_DEL,
+    KC_ESC,   M_APP1,  M_APP2,  M_1PASS,           M_APP3,  KC_TRNS,         KC_TRNS,  M_WMIN,  M_APP4, M_APP5, M_APP6, KC_INS,
     KC_CAPS,  LCTL(KC_X),  LCTL(KC_C),  LSFT(LCTL(KC_C)),  LCTL(KC_V),  KC_TRNS,         KC_TRNS,  HYPR(KC_K),  LSFT(LCTL(KC_1)),  KC_NO,       M_EQLR,      KC_SLSH,
     KC_TRNS,  KC_TRNS,     KC_TRNS,     KC_TRNS,           KC_TRNS,     TO(BASE_LAYER),  KC_NO,    KC_TRNS,     KC_TRNS,           KC_TRNS,     KC_TRNS,     KC_TRNS
   )
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  // Stop pressing the alt key once a key other than the alt-tab macro has been
+  // pressed.
   if (keycode != M_ALTT && m_altt_pressed) {
     unregister_code(KC_LALT);
     m_altt_pressed = false;
+  }
+  // Ensure shift is not pressed when the symbol layer is active.
+  if (IS_LAYER_ON(SYM_LAYER)) {
+    del_mods(MOD_MASK_SHIFT);
+    del_oneshot_mods(MOD_MASK_SHIFT);
   }
   switch (keycode) {
     case M_ALTT:
@@ -107,6 +124,84 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           m_altt_pressed = true;
         }
         tap_code(KC_TAB);
+      }
+      break;
+    case M_APP1:
+      if (record->event.pressed) {
+        if (m_is_chromebook) {
+          SEND_STRING(SS_DOWN(X_LALT));
+          SEND_STRING(SS_TAP(X_1));
+          SEND_STRING(SS_UP(X_LALT));
+        } else {
+          SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL)SS_DOWN(X_LALT)SS_DOWN(X_LGUI));
+          SEND_STRING(SS_TAP(X_1));
+          SEND_STRING(SS_UP(X_LGUI)SS_UP(X_LALT)SS_UP(X_LCTL)SS_UP(X_LSFT));
+        }
+      }
+      break;
+    case M_APP2:
+      if (record->event.pressed) {
+        if (m_is_chromebook) {
+          SEND_STRING(SS_DOWN(X_LALT));
+          SEND_STRING(SS_TAP(X_2));
+          SEND_STRING(SS_UP(X_LALT));
+        } else {
+          SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL)SS_DOWN(X_LALT)SS_DOWN(X_LGUI));
+          SEND_STRING(SS_TAP(X_2));
+          SEND_STRING(SS_UP(X_LGUI)SS_UP(X_LALT)SS_UP(X_LCTL)SS_UP(X_LSFT));
+        }
+      }
+      break;
+    case M_APP3:
+      if (record->event.pressed) {
+        if (m_is_chromebook) {
+          SEND_STRING(SS_DOWN(X_LALT));
+          SEND_STRING(SS_TAP(X_3));
+          SEND_STRING(SS_UP(X_LALT));
+        } else {
+          SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL)SS_DOWN(X_LALT)SS_DOWN(X_LGUI));
+          SEND_STRING(SS_TAP(X_3));
+          SEND_STRING(SS_UP(X_LGUI)SS_UP(X_LALT)SS_UP(X_LCTL)SS_UP(X_LSFT));
+        }
+      }
+      break;
+    case M_APP4:
+      if (record->event.pressed) {
+        if (m_is_chromebook) {
+          SEND_STRING(SS_DOWN(X_LALT));
+          SEND_STRING(SS_TAP(X_4));
+          SEND_STRING(SS_UP(X_LALT));
+        } else {
+          SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL)SS_DOWN(X_LALT)SS_DOWN(X_LGUI));
+          SEND_STRING(SS_TAP(X_4));
+          SEND_STRING(SS_UP(X_LGUI)SS_UP(X_LALT)SS_UP(X_LCTL)SS_UP(X_LSFT));
+        }
+      }
+      break;
+    case M_APP5:
+      if (record->event.pressed) {
+        if (m_is_chromebook) {
+          SEND_STRING(SS_DOWN(X_LALT));
+          SEND_STRING(SS_TAP(X_5));
+          SEND_STRING(SS_UP(X_LALT));
+        } else {
+          SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL)SS_DOWN(X_LALT)SS_DOWN(X_LGUI));
+          SEND_STRING(SS_TAP(X_5));
+          SEND_STRING(SS_UP(X_LGUI)SS_UP(X_LALT)SS_UP(X_LCTL)SS_UP(X_LSFT));
+        }
+      }
+      break;
+    case M_APP6:
+      if (record->event.pressed) {
+        if (m_is_chromebook) {
+          SEND_STRING(SS_DOWN(X_LALT));
+          SEND_STRING(SS_TAP(X_6));
+          SEND_STRING(SS_UP(X_LALT));
+        } else {
+          SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL)SS_DOWN(X_LALT)SS_DOWN(X_LGUI));
+          SEND_STRING(SS_TAP(X_6));
+          SEND_STRING(SS_UP(X_LGUI)SS_UP(X_LALT)SS_UP(X_LCTL)SS_UP(X_LSFT));
+        }
       }
       break;
     case M_SCM1:
@@ -193,6 +288,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       break;
+    case M_WMIN:
+      if (record->event.pressed) {
+        if (m_is_chromebook) {
+          SEND_STRING(SS_DOWN(X_LALT));
+          SEND_STRING(SS_TAP(X_MINS));
+          SEND_STRING(SS_UP(X_LALT));
+        } else {
+          SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL)SS_DOWN(X_LALT)SS_DOWN(X_LGUI));
+          SEND_STRING(SS_TAP(X_M));
+          SEND_STRING(SS_UP(X_LGUI)SS_UP(X_LALT)SS_UP(X_LCTL)SS_UP(X_LSFT));
+        }
+      }
+      break;
+    case M_WMAX:
+      if (record->event.pressed) {
+        if (m_is_chromebook) {
+          SEND_STRING(SS_DOWN(X_LALT));
+          SEND_STRING(SS_TAP(X_EQL));
+          SEND_STRING(SS_UP(X_LALT));
+        } else {
+          SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL)SS_DOWN(X_LALT)SS_DOWN(X_LGUI));
+          SEND_STRING(SS_TAP(X_J));
+          SEND_STRING(SS_UP(X_LGUI)SS_UP(X_LALT)SS_UP(X_LCTL)SS_UP(X_LSFT));
+        }
+      }
+      break;
     case M_ISCB:
       if (record->event.pressed) {
         m_is_chromebook = true;
@@ -214,11 +335,14 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
     case TD(TD_SPC_TAB):
     case KC_ENT:
     case KC_F1 ... KC_F12:
+    case M_ISCB:
+    case M_ISWIN:
       if (!record->event.pressed) { layer_move(BASE_LAYER); }
       break;
     // Cancel caps lock if escape is pressed.
     case KC_ESC:
       if (host_keyboard_led_state().caps_lock) { tap_code(KC_CAPS); }
+      if (!record->event.pressed) { layer_move(BASE_LAYER); }
       break;
     // Return to the nav layer if symbols in the func layer have been pressed.
     case KC_ASTR:
@@ -256,8 +380,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     case LCTL_T(KC_9):
     case LSFT_T(KC_0):
       return TAPPING_TERM_MODS;
-    case KC_SPC:
-      return TAPPING_TERM_SPACE;
+    case TD(TD_SPC_TAB):
+    case TD(TD_HOME_END):
+      return TAPPING_TERM_TAPDANCE;
     default:
       return TAPPING_TERM;
   }
