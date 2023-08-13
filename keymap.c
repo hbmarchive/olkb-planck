@@ -211,6 +211,7 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     // Return to the base layer if space, enter or a function key is pressed.
     case KC_SPC:
+    case TD(TD_SPC_TAB):
     case KC_ENT:
     case KC_F1 ... KC_F12:
       if (!record->event.pressed) { layer_move(BASE_LAYER); }
