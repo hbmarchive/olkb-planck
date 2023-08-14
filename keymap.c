@@ -52,10 +52,34 @@ enum {
   TD_HOME_END
 };
 
+typedef enum {
+  TD_NONE,
+  TD_UNKNOWN,
+  TD_SINGLE_TAP,
+  TD_DOUBLE_TAP,
+  TD_OTHER_KEY
+} td_state_t;
+
+typedef struct {
+  bool is_press_action;
+  td_state_t state;
+} td_doubletap_t;
+
+// Create instance of 'td_doubletap_t' for the home/end tap dance.
+static td_doubletap_t home_end = {
+  .is_press_action = true,
+  .state = TD_NONE
+};
+
+// For the home/end tap dance, put here so they can be used in any keymap.
+td_state_t td_get_taps(tap_dance_state_t *state);
+void home_end_finished(tap_dance_state_t *state, void *user_data);
+void home_end_reset(tap_dance_state_t *state, void *user_data);
+
 // Tap Dance definitions
 tap_dance_action_t tap_dance_actions[] = {
     [TD_SPC_TAB] = ACTION_TAP_DANCE_DOUBLE(KC_SPC, KC_TAB),
-    [TD_HOME_END] = ACTION_TAP_DANCE_DOUBLE(KC_HOME, KC_END)
+    [TD_HOME_END] =ACTION_TAP_DANCE_FN_ADVANCED(NULL, home_end_finished, home_end_reset)
 };
 
 // Stores state of M_ALTT macro - true if we are currently tabbing between
@@ -330,8 +354,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    // Return to the base layer if space, enter or a function key is pressed.
-    case KC_SPC:
+    // Return to the base layer if space, enter, home/end or a function key is
+    // pressed.
     case TD(TD_SPC_TAB):
     case KC_ENT:
     case KC_F1 ... KC_F12:
@@ -358,6 +382,43 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       break;
   }
+}
+
+td_state_t td_get_taps(tap_dance_state_t *state) {
+  if (state->count == 1) {
+    // Interrupted means another key has been pressed within the tapping term
+    // and state not being pressed means the key is no longer pressed, so return
+    // a single tap.
+    if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
+  } else if (state->count == 2) {
+    // If the double tap has been interrupted we interpret that as fast typing.
+    if (state->interrupted) return TD_OTHER_KEY;
+    // And if the tapping term has expired without another key being pressed to
+    // interrupt, we interpret this as double tap.
+    else if (!state->pressed) return TD_DOUBLE_TAP;
+  }
+  return TD_UNKNOWN;
+}
+
+void home_end_finished(tap_dance_state_t *state, void *user_data) {
+  home_end.state = td_get_taps(state);
+  switch (home_end.state) {
+    case TD_SINGLE_TAP:
+    case TD_OTHER_KEY:
+      tap_code(KC_HOME);
+      layer_move(BASE_LAYER);
+      break;
+    case TD_DOUBLE_TAP:
+      tap_code(KC_END);
+      layer_move(BASE_LAYER);
+      break;
+    default:
+      break;
+  }
+}
+
+void home_end_reset(tap_dance_state_t *state, void *user_data) {
+  home_end.state = TD_NONE;
 }
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
