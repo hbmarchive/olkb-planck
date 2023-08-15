@@ -55,6 +55,3 @@
 
 // Tapping term for the homerow mod keys
 #define TAPPING_TERM_MODS 550
-
-// Tapping term for the tapdance keys
-#define TAPPING_TERM_TAPDANCE 160

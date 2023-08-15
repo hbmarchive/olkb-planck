@@ -28,7 +28,7 @@ enum my_keycodes {
     M_ESCQ = SAFE_RANGE,
     M_ESCW,
     M_ESCV,
-    M_EQLR,
+    M_DDS,
     M_ALTT,
     M_APP1,
     M_APP2,
@@ -47,17 +47,6 @@ enum my_keycodes {
     M_ISWIN
 };
 
-enum {
-  TD_SPC_TAB,
-  TD_HOME_END
-};
-
-// Tap Dance definitions
-tap_dance_action_t tap_dance_actions[] = {
-    [TD_SPC_TAB] = ACTION_TAP_DANCE_DOUBLE(KC_SPC, KC_TAB),
-    [TD_HOME_END] = ACTION_TAP_DANCE_DOUBLE(KC_HOME, KC_END)
-};
-
 // Stores state of M_ALTT macro - true if we are currently tabbing between
 // windows.
 static bool m_altt_pressed = false;
@@ -69,38 +58,38 @@ static bool m_is_chromebook = false;
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [BASE_LAYER] = LAYOUT_planck_grid(
-    LSFT_T(KC_Q),    LCTL_T(KC_W),   LALT_T(KC_F),   LGUI_T(KC_P),   KC_B,            LCTL(KC_TAB),   M_ALTT,            KC_J,    LGUI_T(KC_L),  LALT_T(KC_U),  LCTL_T(KC_Y),  LSFT_T(KC_BSPC),
-    KC_A,            KC_R,           KC_S,           KC_T,           KC_G,            KC_ESC,         KC_BSPC,           KC_M,    KC_N,          KC_E,          KC_I,          KC_O,
-    KC_Z,            KC_X,           KC_C,           KC_D,           KC_V,            M_1PASS,        LSFT(LCTL(KC_C)),  KC_K,    KC_H,          KC_COMM,       KC_DOT,        OSL(SCUT_LAYER),
-    TO(FUNC_LAYER),  OSM(MOD_LCTL),  OSM(MOD_LALT),  OSM(MOD_LGUI),  TD(TD_SPC_TAB),  OSM(MOD_LSFT),  OSL(SYM_LAYER),    KC_ENT,  KC_LEFT,       KC_DOWN,       KC_UP,         KC_RGHT
+    KC_ESC,          KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,    KC_J,    KC_L,            KC_U,     KC_Y,     KC_BSLS,  KC_DEL,
+    KC_TAB,          KC_A,           KC_R,           KC_S,           KC_T,           KC_G,    KC_M,    KC_N,            KC_E,     KC_I,     KC_O,     KC_BSPC,
+    KC_CAPS,         KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,    KC_K,    KC_H,            KC_COMM,  KC_DOT,   KC_SLSH,  OSL(SCUT_LAYER),
+    TO(FUNC_LAYER),  OSM(MOD_LGUI),  OSM(MOD_LALT),  OSM(MOD_LCTL),  OSM(MOD_LSFT),  KC_SPC,  KC_ENT,  OSL(SYM_LAYER),  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT
   ),
 
   [SYM_LAYER] = LAYOUT_planck_grid(
-    KC_EXLM,         LSFT(KC_2),     LSFT(KC_3),  KC_DLR,   KC_PERC,  KC_TRNS,         KC_TRNS,        KC_CIRC,  KC_AMPR,        KC_ASTR,        KC_UNDS,  KC_PLUS,
-    KC_ESC,          LSFT(KC_NUBS),  KC_LBRC,     KC_LCBR,  KC_LPRN,  KC_TRNS,         KC_TRNS,        KC_COLN,  LSFT(KC_QUOT),  LSFT(KC_BSLS),  KC_MINS,  KC_EQL,
-    TO(FUNC_LAYER),  KC_NUBS,        KC_RBRC,     KC_RCBR,  KC_RPRN,  KC_TRNS,         KC_TRNS,        KC_SCLN,  KC_QUOT,        KC_BSLS,        KC_GRV,   OSL(SCUT_LAYER),
-    KC_TRNS,         KC_TRNS,        KC_TRNS,     KC_TRNS,  KC_TRNS,  TO(BASE_LAYER),  TO(NAV_LAYER),  KC_TRNS,  KC_TRNS,        KC_TRNS,        KC_TRNS,  KC_TRNS
+    KC_GRV,   KC_EXLM,  LSFT(KC_2),     LSFT(KC_3),  KC_DLR,          KC_PERC,  KC_CIRC,  KC_AMPR,        KC_ASTR,        KC_UNDS,  KC_PLUS,  KC_TRNS,
+    KC_TRNS,  KC_NO,    LSFT(KC_NUBS),  KC_LBRC,     KC_LCBR,         KC_LPRN,  KC_COLN,  LSFT(KC_QUOT),  LSFT(KC_BSLS),  KC_MINS,  KC_EQL,   KC_TRNS,
+    KC_TRNS,  KC_NO,    KC_NUBS,        KC_RBRC,     KC_RCBR,         KC_RPRN,  KC_SCLN,  KC_QUOT,        KC_BSLS,        KC_NO,    KC_NO,    KC_TRNS,
+    KC_TRNS,  KC_TRNS,  KC_TRNS,        KC_TRNS,     TO(BASE_LAYER),  KC_TRNS,  KC_TRNS,  TO(NAV_LAYER),  KC_TRNS,        KC_TRNS,  KC_TRNS,  KC_TRNS
   ),
 
   [NAV_LAYER] = LAYOUT_planck_grid(
-    LSFT_T(KC_1),    LCTL_T(KC_2),  LALT_T(KC_3),  LGUI_T(KC_4),  KC_5,     KC_TRNS,         KC_TRNS,  KC_6,     LGUI_T(KC_7),  LALT_T(KC_8),  LCTL_T(KC_9),  LSFT_T(KC_0),
-    M_XTAB,          LCTL(KC_TAB),  M_ALTT,        KC_BTN1,       KC_BTN2,  KC_TRNS,         KC_TRNS,  KC_WH_U,  KC_LEFT,       KC_DOWN,       KC_UP,         KC_RGHT,
-    TO(FUNC_LAYER),  M_PDESK,       M_NDESK,       M_SCM1,        M_ESCV,   KC_TRNS,         KC_TRNS,  KC_WH_D,  TD(TD_HOME_END),       KC_PGDN,       KC_PGUP,       OSL(SCUT_LAYER),
-    KC_TRNS,         KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS,  TO(BASE_LAYER),  KC_NO,    KC_TRNS,  KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS
+    KC_TRNS,  KC_1,     KC_2,          KC_3,     KC_4,            KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_TRNS,
+    KC_TRNS,  M_XTAB,   LCTL(KC_TAB),  M_ALTT,   KC_BTN1,         KC_BTN2,  KC_WH_U,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  KC_TRNS,
+    KC_TRNS,  KC_NO,    M_PDESK,       M_NDESK,  M_SCM1,          M_ESCV,   KC_WH_D,  KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   KC_TRNS,
+    KC_TRNS,  KC_TRNS,  KC_TRNS,       KC_TRNS,  TO(BASE_LAYER),  KC_TRNS,  KC_TRNS,  KC_NO,    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
   ),
 
   [FUNC_LAYER] = LAYOUT_planck_grid(
-    KC_F1,    KC_F2,    KC_F3,   KC_F4,    KC_MNXT,  KC_TRNS,         KC_TRNS,        KC_VOLU,  KC_BRIU,  KC_ASTR,  KC_NO,    KC_PLUS,
-    KC_F5,    KC_F6,    KC_F7,   KC_F8,    KC_MPLY,  KC_TRNS,         KC_TRNS,        KC_VOLD,  KC_BRID,  KC_NO,    KC_MINS,  KC_EQL,
-    KC_F9,    KC_F10,   KC_F11,  KC_F12,   KC_MPRV,  KC_TRNS,         KC_TRNS,        KC_MUTE,  KC_NO,    KC_COMM,  KC_DOT,   OSL(SCUT_LAYER),
-    KC_TRNS,  KC_TRNS,  M_ISCB,  M_ISWIN,  KC_TRNS,  TO(BASE_LAYER),  TO(SYM_LAYER),  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
+    KC_TRNS,  KC_F1,    KC_F2,   KC_F3,    KC_F4,           KC_MNXT,  KC_VOLU,  KC_BRIU,        KC_ASTR,  KC_NO,    KC_PLUS,  KC_TRNS,
+    KC_TRNS,  KC_F5,    KC_F6,   KC_F7,    KC_F8,           KC_MPLY,  KC_VOLD,  KC_BRID,        KC_NO,    KC_MINS,  KC_EQL,   KC_TRNS,
+    KC_TRNS,  KC_F9,    KC_F10,  KC_F11,   KC_F12,          KC_MPRV,  KC_VOLU,  KC_NO,          KC_COMM,  KC_DOT,   KC_SLSH,  KC_TRNS,
+    KC_TRNS,  M_ISWIN,  M_ISCB,  KC_TRNS,  TO(BASE_LAYER),  KC_TRNS,  KC_TRNS,  TO(SYM_LAYER),  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
   ),
 
   [SCUT_LAYER] = LAYOUT_planck_grid(
-    M_ESCQ,   M_ESCW,      LCTL(KC_F),  KC_NO,             LCTL(KC_B),  KC_TRNS,         KC_TRNS,  M_WMAX,  KC_NO,             KC_NO,       KC_NO,       KC_DEL,
-    KC_ESC,   M_APP1,  M_APP2,  M_1PASS,           M_APP3,  KC_TRNS,         KC_TRNS,  M_WMIN,  M_APP4, M_APP5, M_APP6, KC_INS,
-    KC_CAPS,  LCTL(KC_X),  LCTL(KC_C),  LSFT(LCTL(KC_C)),  LCTL(KC_V),  KC_TRNS,         KC_TRNS,  HYPR(KC_K),  LSFT(LCTL(KC_1)),  KC_NO,       M_EQLR,      KC_SLSH,
-    KC_TRNS,  KC_TRNS,     KC_TRNS,     KC_TRNS,           KC_TRNS,     TO(BASE_LAYER),  KC_NO,    KC_TRNS,     KC_TRNS,           KC_TRNS,     KC_TRNS,     KC_TRNS
+    KC_TRNS,  M_ESCQ,   M_ESCW,      LCTL(KC_F),  KC_NO,             LCTL(KC_B),  M_WMAX,      KC_NO,             KC_NO,    KC_NO,    KC_NO,    KC_TRNS,
+    KC_TRNS,  KC_NO,    M_APP1,      M_APP2,      M_1PASS,           M_APP3,      M_WMIN,      M_APP4,            M_APP5,   M_APP6,   KC_INS,   KC_TRNS,
+    KC_TRNS,  KC_NO,    LCTL(KC_X),  LCTL(KC_C),  LSFT(LCTL(KC_C)),  LCTL(KC_V),  HYPR(KC_K),  LSFT(LCTL(KC_1)),  KC_NO,    KC_NO,    M_DDS,    KC_TRNS,
+    KC_TRNS,  KC_TRNS,  KC_TRNS,     KC_TRNS,     TO(BASE_LAYER),    KC_TRNS,     KC_TRNS,     KC_NO,             KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
   )
 };
 
@@ -240,9 +229,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_move(BASE_LAYER);
       }
       break;
-    case M_EQLR:
+    case M_DDS:
       if (record->event.pressed) {
-        SEND_STRING("=> ");
+        SEND_STRING("../");
       } else {
         layer_move(BASE_LAYER);
       }
@@ -332,7 +321,6 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     // Return to the base layer if space, enter or a function key is pressed.
     case KC_SPC:
-    case TD(TD_SPC_TAB):
     case KC_ENT:
     case KC_F1 ... KC_F12:
     case M_ISCB:
@@ -380,9 +368,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     case LCTL_T(KC_9):
     case LSFT_T(KC_0):
       return TAPPING_TERM_MODS;
-    case TD(TD_SPC_TAB):
-    case TD(TD_HOME_END):
-      return TAPPING_TERM_TAPDANCE;
     default:
       return TAPPING_TERM;
   }
