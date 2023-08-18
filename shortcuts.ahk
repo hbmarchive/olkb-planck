@@ -25,7 +25,7 @@ WinMinimize, %title%
 return
 
 ; Maximize window
-+^!#g::
++^!#j::
 WinGetActiveTitle, title
 WinGet, WinState, MinMax, %title%
 If (WinState)
