@@ -58,9 +58,9 @@ static bool m_is_chromebook = false;
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [BASE_LAYER] = LAYOUT_planck_grid(
-    KC_ESC,          KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,    KC_J,    KC_L,            KC_U,     KC_Y,     KC_NUBS,  KC_DEL,
+    KC_ESC,          KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,    KC_J,    KC_L,            KC_U,     KC_Y,     KC_CAPS,  KC_DEL,
     KC_TAB,          KC_A,           KC_R,           KC_S,           KC_T,           KC_G,    KC_M,    KC_N,            KC_E,     KC_I,     KC_O,     KC_BSPC,
-    KC_CAPS,         KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,    KC_K,    KC_H,            KC_COMM,  KC_DOT,   KC_SLSH,  OSL(SCUT_LAYER),
+    KC_NUBS,         KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,    KC_K,    KC_H,            KC_COMM,  KC_DOT,   KC_SLSH,  OSL(SCUT_LAYER),
     TO(FUNC_LAYER),  OSM(MOD_LGUI),  OSM(MOD_LALT),  OSM(MOD_LCTL),  OSM(MOD_LSFT),  KC_SPC,  KC_ENT,  OSL(SYM_LAYER),  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT
   ),
 
@@ -322,6 +322,7 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
     // Return to the base layer if space, enter, home, end or a function key is
     // pressed.
     case KC_SPC:
+    case KC_TAB:
     case KC_ENT:
     case KC_HOME:
     case KC_END:
