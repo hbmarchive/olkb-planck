@@ -43,6 +43,8 @@ enum my_keycodes {
     M_XTAB,
     M_WMIN,
     M_WMAX,
+    M_NTRM,
+    M_EMOJI,
     M_ISCB,
     M_ISWIN
 };
@@ -85,12 +87,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRNS,  M_ISWIN,  M_ISCB,  KC_TRNS,  TO(BASE_LAYER),  KC_TRNS,  KC_TRNS,  TO(SYM_LAYER),  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
   ),
 
-  [SCUT_LAYER] = LAYOUT_planck_grid(
-    KC_TRNS,  M_ESCQ,   M_ESCW,      LCTL(KC_F),  KC_NO,             LCTL(KC_B),  M_WMAX,      KC_NO,             KC_NO,    KC_NO,    KC_NO,    KC_TRNS,
-    KC_TRNS,  KC_NO,    M_APP1,      M_APP2,      M_1PASS,           M_APP3,      M_WMIN,      M_APP4,            M_APP5,   M_APP6,   KC_INS,   KC_TRNS,
-    KC_TRNS,  KC_NO,    LCTL(KC_X),  LCTL(KC_C),  LSFT(LCTL(KC_C)),  LCTL(KC_V),  HYPR(KC_K),  LSFT(LCTL(KC_1)),  KC_NO,    KC_NO,    M_DDS,    KC_TRNS,
-    KC_TRNS,  KC_TRNS,  KC_TRNS,     KC_TRNS,     TO(BASE_LAYER),    KC_TRNS,     KC_TRNS,     KC_NO,             KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
-  )
+  [SCUT_LAYER]  = LAYOUT_planck_grid(
+    KC_TRNS,  M_ESCQ,   M_ESCW,      LCTL(KC_F),  KC_NO,             LCTL(KC_B),  M_WMAX,      M_ISWIN,  M_ISCB,   KC_NO,    KC_NO,    KC_TRNS,
+    KC_TRNS,  M_APP1,   M_APP2,      M_APP3,      M_1PASS,           M_APP4,      M_WMIN,      M_NTRM,   M_EMOJI,  KC_NO,    KC_INS,   KC_TRNS,
+    KC_TRNS,  KC_NO,    LCTL(KC_X),  LCTL(KC_C),  LSFT(LCTL(KC_C)),  LCTL(KC_V),  HYPR(KC_K),  M_NO,     KC_NO,    KC_NO,    M_DDS,    KC_TRNS,
+    KC_TRNS,  KC_TRNS,  KC_TRNS,     KC_TRNS,     TO(BASE_LAYER),    KC_TRNS,     KC_TRNS,     KC_NO,    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
+                )
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -300,6 +302,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL)SS_DOWN(X_LALT)SS_DOWN(X_LGUI));
           SEND_STRING(SS_TAP(X_J));
           SEND_STRING(SS_UP(X_LGUI)SS_UP(X_LALT)SS_UP(X_LCTL)SS_UP(X_LSFT));
+        }
+      }
+      break;
+    case M_NTRM:
+      if (record->event.pressed) {
+        if (m_is_chromebook) {
+          SEND_STRING(SS_DOWN(X_LCTL)SS_TAP(X_T)SS_UP(X_LCTL));
+        } else {
+          SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL));
+          SEND_STRING(SS_TAP(X_1));
+          SEND_STRING(SS_UP(X_LCTL)SS_UP(X_LSFT));
+        }
+      }
+      break;
+    case M_EMOJI:
+      if (record->event.pressed) {
+        if (m_is_chromebook) {
+          SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LGUI));
+          SEND_STRING(SS_TAP(X_SPC));
+          SEND_STRING(SS_UP(X_LGUI)SS_UP(X_LSFT));
+        } else {
+          SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_SCLN)SS_UP(X_LGUI));
         }
       }
       break;
