@@ -33,8 +33,6 @@ enum my_keycodes {
     M_APP2,
     M_APP3,
     M_APP4,
-    M_APP5,
-    M_APP6,
     M_SCM1,
     M_1PASS,
     M_NDESK,
@@ -164,32 +162,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
           SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL)SS_DOWN(X_LALT)SS_DOWN(X_LGUI));
           SEND_STRING(SS_TAP(X_4));
-          SEND_STRING(SS_UP(X_LGUI)SS_UP(X_LALT)SS_UP(X_LCTL)SS_UP(X_LSFT));
-        }
-      }
-      break;
-    case M_APP5:
-      if (record->event.pressed) {
-        if (m_is_chromebook) {
-          SEND_STRING(SS_DOWN(X_LALT));
-          SEND_STRING(SS_TAP(X_5));
-          SEND_STRING(SS_UP(X_LALT));
-        } else {
-          SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL)SS_DOWN(X_LALT)SS_DOWN(X_LGUI));
-          SEND_STRING(SS_TAP(X_5));
-          SEND_STRING(SS_UP(X_LGUI)SS_UP(X_LALT)SS_UP(X_LCTL)SS_UP(X_LSFT));
-        }
-      }
-      break;
-    case M_APP6:
-      if (record->event.pressed) {
-        if (m_is_chromebook) {
-          SEND_STRING(SS_DOWN(X_LALT));
-          SEND_STRING(SS_TAP(X_6));
-          SEND_STRING(SS_UP(X_LALT));
-        } else {
-          SEND_STRING(SS_DOWN(X_LSFT)SS_DOWN(X_LCTL)SS_DOWN(X_LALT)SS_DOWN(X_LGUI));
-          SEND_STRING(SS_TAP(X_6));
           SEND_STRING(SS_UP(X_LGUI)SS_UP(X_LALT)SS_UP(X_LCTL)SS_UP(X_LSFT));
         }
       }
