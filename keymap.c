@@ -1,5 +1,4 @@
 /* Copyright 2015-2023 Jack Humbert
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -61,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC,          KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,    KC_J,    KC_L,            KC_U,     KC_Y,     KC_CAPS,  KC_DEL,
     KC_TAB,          KC_A,           KC_R,           KC_S,           KC_T,           KC_G,    KC_M,    KC_N,            KC_E,     KC_I,     KC_O,     KC_BSPC,
     KC_NUBS,         KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,    KC_K,    KC_H,            KC_COMM,  KC_DOT,   KC_SLSH,  OSL(SCUT_LAYER),
-    TO(FUNC_LAYER),  OSM(MOD_LGUI),  OSM(MOD_LALT),  OSM(MOD_LCTL),  OSM(MOD_LSFT),  KC_SPC,  KC_ENT,  OSL(SYM_LAYER),  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT
+    TO(FUNC_LAYER),  OSM(MOD_LCTL),  OSM(MOD_LALT),  OSM(MOD_LGUI),  OSM(MOD_LSFT),  KC_SPC,  KC_ENT,  OSL(SYM_LAYER),  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT
   ),
 
   [SYM_LAYER] = LAYOUT_planck_grid(
