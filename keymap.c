@@ -87,9 +87,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [SCUT_LAYER]  = LAYOUT_planck_grid(
     KC_TRNS,  M_ESCQ,   M_ESCW,      LCTL(KC_F),  KC_NO,             LCTL(KC_B),  M_WMAX,      M_ISWIN,  M_ISCB,   KC_NO,    KC_NO,    KC_TRNS,
     KC_TRNS,  M_APP1,   M_APP2,      M_APP3,      M_1PASS,           M_APP4,      M_WMIN,      M_NTRM,   M_EMOJI,  KC_NO,    KC_INS,   KC_TRNS,
-    KC_TRNS,  KC_NO,    LCTL(KC_X),  LCTL(KC_C),  LSFT(LCTL(KC_C)),  LCTL(KC_V),  HYPR(KC_K),  M_NO,     KC_NO,    KC_NO,    M_DDS,    KC_TRNS,
-    KC_TRNS,  KC_TRNS,  KC_TRNS,     KC_TRNS,     TO(BASE_LAYER),    KC_TRNS,     KC_TRNS,     KC_NO,    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
-                )
+    KC_TRNS,  KC_NO,    LCTL(KC_X),  LCTL(KC_C),  LSFT(LCTL(KC_C)),  LCTL(KC_V),  HYPR(KC_K),  KC_NO,     KC_NO,    KC_NO,    M_DDS,    KC_TRNS,
+    KC_TRNS,  KC_TRNS,  KC_TRNS,     KC_TRNS,     TO(BASE_LAYER),    KC_TRNS,     KC_TRNS,     KC_NO,    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS)
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
