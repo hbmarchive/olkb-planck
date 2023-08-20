@@ -78,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [FUNC_LAYER] = LAYOUT_planck_grid(
-    KC_TRNS,  KC_F1,    KC_F2,   KC_F3,    KC_F4,           KC_MNXT,  KC_VOLU,  KC_BRIU,        KC_ASTR,  KC_NO,    KC_PLUS,  KC_TRNS,
+    KC_TRNS,  KC_F1,    KC_F2,   KC_F3,    KC_F4,           KC_MNXT,  KC_VOLU,  KC_BRIU,        KC_ASTR,  KC_PSCR,    KC_PLUS,  KC_TRNS,
     KC_TRNS,  KC_F5,    KC_F6,   KC_F7,    KC_F8,           KC_MPLY,  KC_VOLD,  KC_BRID,        KC_NO,    KC_MINS,  KC_EQL,   KC_TRNS,
     KC_TRNS,  KC_F9,    KC_F10,  KC_F11,   KC_F12,          KC_MPRV,  KC_VOLU,  KC_NO,          KC_COMM,  KC_DOT,   KC_SLSH,  KC_TRNS,
     KC_TRNS,  M_ISWIN,  M_ISCB,  KC_TRNS,  TO(BASE_LAYER),  KC_TRNS,  KC_TRNS,  TO(SYM_LAYER),  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
@@ -320,6 +320,7 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_ENT:
     case KC_HOME:
     case KC_END:
+    case KC_PSCR:
     case KC_F1 ... KC_F12:
     case M_ISCB:
     case M_ISWIN:
