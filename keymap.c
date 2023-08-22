@@ -42,6 +42,7 @@ enum my_keycodes {
     M_WMAX,
     M_NTRM,
     M_EMOJI,
+    M_ETCTLZ,
     M_ISCB,
     M_ISWIN
 };
@@ -66,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [SYM_LAYER] = LAYOUT_planck_grid(
     KC_GRV,   KC_EXLM,  LSFT(KC_2),     LSFT(KC_3),  KC_DLR,          KC_PERC,  KC_CIRC,  KC_AMPR,        KC_ASTR,        KC_UNDS,  KC_PLUS,  KC_TRNS,
     KC_TRNS,  KC_NO,    LSFT(KC_NUBS),  KC_LBRC,     KC_LCBR,         KC_LPRN,  KC_COLN,  LSFT(KC_QUOT),  LSFT(KC_BSLS),  KC_MINS,  KC_EQL,   KC_TRNS,
-    KC_TRNS,  KC_NO,    KC_NUBS,        KC_RBRC,     KC_RCBR,         KC_RPRN,  KC_SCLN,  KC_QUOT,        KC_BSLS,        KC_NO,    KC_NO,    KC_TRNS,
+    KC_TRNS,  KC_NO,    KC_NUBS,        KC_RBRC,     KC_RCBR,         KC_RPRN,  KC_SCLN,  KC_QUOT,        KC_BSLS,        KC_GRV,    KC_NO,    KC_TRNS,
     KC_TRNS,  KC_TRNS,  KC_TRNS,        KC_TRNS,     TO(BASE_LAYER),  KC_TRNS,  KC_TRNS,  TO(NAV_LAYER),  KC_TRNS,        KC_TRNS,  KC_TRNS,  KC_TRNS
   ),
 
@@ -85,10 +86,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [SCUT_LAYER]  = LAYOUT_planck_grid(
-    KC_TRNS,  M_ESCQ,   M_ESCW,      LCTL(KC_F),  KC_NO,             LCTL(KC_B),  M_WMAX,      M_ISWIN,  M_ISCB,   KC_NO,    KC_NO,    KC_TRNS,
-    KC_TRNS,  M_APP1,   M_APP2,      M_APP3,      M_1PASS,           M_APP4,      M_WMIN,      M_NTRM,   M_EMOJI,  KC_NO,    KC_INS,   KC_TRNS,
-    KC_TRNS,  KC_NO,    LCTL(KC_X),  LCTL(KC_C),  LSFT(LCTL(KC_C)),  LCTL(KC_V),  HYPR(KC_K),  KC_NO,     KC_NO,    KC_NO,    M_DDS,    KC_TRNS,
-    KC_TRNS,  KC_TRNS,  KC_TRNS,     KC_TRNS,     TO(BASE_LAYER),    KC_TRNS,     KC_TRNS,     KC_NO,    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS)
+    KC_TRNS,  M_ESCQ,   M_ESCW,      LCTL(KC_F),  KC_NO,             LCTL(KC_B),  M_WMAX,      M_ISWIN,  M_ISCB,   KC_NO,     KC_NO,    KC_TRNS,
+    KC_TRNS,  M_APP1,   M_APP2,      M_APP3,      M_1PASS,           M_APP4,      M_WMIN,      M_NTRM,   M_EMOJI,  M_ETCTLZ,  KC_INS,   KC_TRNS,
+    KC_TRNS,  KC_NO,    LCTL(KC_X),  LCTL(KC_C),  LSFT(LCTL(KC_C)),  LCTL(KC_V),  HYPR(KC_K),  KC_NO,    KC_NO,    M_DDS,     KC_SLSH,  KC_SLSH,
+    KC_TRNS,  KC_TRNS,  KC_TRNS,     KC_TRNS,     TO(BASE_LAYER),    KC_TRNS,     KC_TRNS,     KC_NO,    KC_TRNS,  KC_TRNS,   KC_TRNS,  KC_TRNS)
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -295,6 +296,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
           SEND_STRING(SS_DOWN(X_LGUI)SS_TAP(X_SCLN)SS_UP(X_LGUI));
         }
+      }
+      break;
+    case M_ETCTLZ:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_ENT));
+        SEND_STRING(SS_DOWN(X_LSFT)SS_TAP(X_BSLS)SS_UP(X_LSFT));
+        SEND_STRING(SS_DOWN(X_LCTL)SS_TAP(X_Z)SS_UP(X_LCTL));
       }
       break;
     case M_ISCB:
